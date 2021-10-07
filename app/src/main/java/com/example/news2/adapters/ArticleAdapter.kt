@@ -19,7 +19,7 @@ class ArticleAdapter() :  RecyclerView.Adapter<ArticleAdapter.RunViewHolder>() {
         }
 
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
+            return oldItem.url == newItem.url
         }
     }
 

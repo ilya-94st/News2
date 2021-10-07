@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.news2.R
 import com.example.news2.adapters.ArticleAdapter
@@ -15,6 +16,7 @@ import com.example.news2.ui.ViewModelNews
 import com.example.news2.util.Const
 import com.example.news2.util.Resourse
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 
 class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding>(){
     lateinit var viewModelNews: ViewModelNews
@@ -31,29 +33,34 @@ class SearchNewsFragment : BaseFragment<FragmentSearchNewsBinding>(){
             }
             findNavController().navigate(R.id.action_searchNewsFragment_to_articleFragment, bundle)
         }
-        viewModelNews.searchNews().observe(viewLifecycleOwner, Observer {
-                response ->
-            when(response){
-                is Resourse.Success ->{
-                    hideProgressBar()
-                    response.data?.let {
-                            newsResponse ->
-                        newsAdapter.submitList(newsResponse.articles)
+        lifecycleScope.launchWhenCreated {
+            viewModelNews.searchNews().collect {
+                    response ->
+                when(response){
+                    is Resourse.Success ->{
+                        hideProgressBar()
+                        response.data?.let {
+                                newsResponse ->
+                            newsAdapter.submitList(newsResponse.articles)
+                        }
                     }
-                }
-                is Resourse.Error ->{
-                    hideProgressBar()
-                    response.data?.let {
-                            message->
-                        Toast.makeText(activity, "Error${message}", Toast.LENGTH_SHORT).show()
-                    }
+                    is Resourse.Error ->{
+                        hideProgressBar()
+                        response.data?.let {
+                                message->
+                            Toast.makeText(activity, "Error${message}", Toast.LENGTH_SHORT).show()
+                        }
 
-                }
-                is Resourse.Loading ->{
-                    showProgressBar()
+                    }
+                    is Resourse.Loading ->{
+                        showProgressBar()
+                    }
                 }
             }
-        })
+        }
+       // viewModelNews.searchNews().observe(viewLifecycleOwner, Observer {
+
+       // })
     }
     private fun searchNews(){
         var job: Job? = null
