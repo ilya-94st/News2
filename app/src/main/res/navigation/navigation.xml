@@ -3,43 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/breackingNewsFragment">
+    app:startDestination="@id/registrationFragment">
 
     <fragment
         android:id="@+id/breackingNewsFragment"
-        android:name="com.example.news2.ui.fragments.BreackingNewsFragment"
+        android:name="com.example.news2.presentation.ui.fragments.BreakingNewsFragment"
         android:label="fragment_breacking_news"
         tools:layout="@layout/fragment_breacking_news" >
         <action
             android:id="@+id/action_breackingNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
+            app:destination="@id/articleFragment"
+            app:popUpTo="@id/breackingNewsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_breackingNewsFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment"
+            app:popUpTo="@id/registrationFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/searchNewsFragment"
-        android:name="com.example.news2.ui.fragments.SearchNewsFragment"
+        android:name="com.example.news2.presentation.ui.fragments.SearchNewsFragment"
         android:label="fragment_search_news"
         tools:layout="@layout/fragment_search_news" >
         <action
             android:id="@+id/action_searchNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/saveNewsFragment"
-        android:name="com.example.news2.ui.fragments.SaveNewsFragment"
-        android:label="fragment_save_news"
-        tools:layout="@layout/fragment_save_news" >
-        <action
-            android:id="@+id/action_saveNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
+            app:destination="@id/articleFragment"
+            app:popUpTo="@id/searchNewsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
-        android:name="com.example.news2.ui.fragments.ArticleFragment"
+        android:name="com.example.news2.presentation.ui.fragments.ArticleFragment"
         android:label="fragment_article"
         tools:layout="@layout/fragment_article" >
 
         <argument
             android:name="article"
-            app:argType="com.example.news2.model.Article" />
+            app:argType="com.example.news2.domain.model.responce.Article" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="com.example.news2.presentation.ui.fragments.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_breackingNewsFragment"
+            app:destination="@id/breackingNewsFragment"
+            app:popUpTo="@id/registrationFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

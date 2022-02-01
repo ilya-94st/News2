@@ -5,10 +5,6 @@
         android:id="@+id/breackingNewsFragment"
         android:icon="@drawable/ic_baseline_fiber_new_24"
         />
-    <item android:title="favorite news"
-        android:id="@+id/saveNewsFragment"
-        android:icon="@drawable/ic_baseline_favorite_24"
-        />
     <item android:title="search news"
         android:id="@+id/searchNewsFragment"
         android:icon="@drawable/ic_baseline_search_24"
